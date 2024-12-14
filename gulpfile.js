@@ -9,6 +9,7 @@
   
 const gulp = require('gulp')
 const sass = require('gulp-sass')(require('sass'))
+const imagemin = require('gulp-imagemin')
 
 
 function compStyle(){
@@ -17,7 +18,13 @@ function compStyle(){
     .pipe(gulp.dest('./dist/css'))
 }
 
-// exports.default = compStyle
+function compImages(){
+    return gulp.src('./source/images/**/*')
+    .pipe(imagemin())
+    .pipe(gulp.dest('./dist/images'))
+}
+
+exports.default = gulp.parallel(compStyle, compImages)
 exports.watch = function(){
     gulp.watch ('./source/styles/*.scss',gulp.parallel(compStyle))
 }
